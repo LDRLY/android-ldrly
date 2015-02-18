@@ -47,6 +47,7 @@ import com.ldrly.android.sdk.LDRLY;
     ```xml
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     ```
     2. Add the following required activity in-between your application element:
     ```xml
@@ -57,6 +58,20 @@ import com.ldrly.android.sdk.LDRLY;
         android:allowTaskReparenting="true"
         android:enabled="true">
     </activity>
+    <activity
+        android:name="com.ldrly.android.sdk.ads.InterstitialAdActivity"
+        android:label="AdActivity"
+        android:allowEmbedded="true"
+        android:allowTaskReparenting="true"
+        android:enabled="true">
+    </activity>
+    
+    <activity android:name="com.lifestreet.android.lsmsdk.ads.InterstitialAdActivity"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+            <activity android:name="com.lifestreet.android.lsmsdk.mraid.MRAIDActivity"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+            <activity android:name="com.lifestreet.android.lsmsdk.mraid.MRAIDInterstitialActivity"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
     ```
 6. Add the initialization call into your Activity onCreate method:
 ```java
@@ -75,11 +90,14 @@ public class MainActivity extends Activity {
         final String API_KEY = "your_api_key";
         final String API_SECRET = "your_api_secret";
 
-        ldrly = new LDRLY(this, API_KEY, API_SECRET, NAMESPACE, true);
+        ldrly = new LDRLY(this, API_KEY, API_SECRET, NAMESPACE);
     }
 }
 
 ```
+
+Optionally, the constructor can be invoked with an additional parameter (triggerAuth) as false to ignore the user authentication screen. The user may be asked to authenticate later when the LDRLY UI is opened.
+
 7. To invoke the LDRLY UI: ldrly.openPortal()
 8. To submit player data on LDRLY, the *submit stat* methods must be invoked throughout the game. 
     1.For more details on each **stat type** see https://developers.ldrly.com/docs/
@@ -95,3 +113,4 @@ Support
 -----
 
 Questions? Please contact us at support@ldrly.com.
+
